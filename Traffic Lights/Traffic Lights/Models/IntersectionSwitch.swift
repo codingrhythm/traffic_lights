@@ -9,9 +9,16 @@
 import Foundation
 
 class IntersectionSwitch {
+    enum TrafficDirection: String {
+        case southNorth = "SN", eastWest = "EW"
+    }
     
-    let southNorthLight = TrafficLight()
-    let eastWestLight = TrafficLight()
+    var direction: TrafficDirection = .southNorth
+    
+    let lights: [TrafficDirection: TrafficLight] = [
+        TrafficDirection.southNorth: TrafficLight(),
+        TrafficDirection.eastWest: TrafficLight()
+    ]
     
     func switchOn(_ light: TimedLight, completion: (() -> Void)) {
         
