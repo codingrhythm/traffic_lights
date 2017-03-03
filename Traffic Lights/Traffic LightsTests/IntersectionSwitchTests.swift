@@ -30,11 +30,12 @@ class MockLight: TimedLight {
 }
 
 class IntersectionSwitchTests: XCTestCase {
-    let intersectionSwitch = IntersectionSwitch()
+    
     
     func testCanSwitchOnLightForOneSeconds() {
         let expectation = self.expectation(description: "Light is switched on for 1 second")
         let light = MockLight(in: UIColor.red, withDuration: 1)
+        let intersectionSwitch = IntersectionSwitch()
         
         intersectionSwitch.switchOn(light) {
             XCTAssertFalse(light.isOn)
@@ -51,6 +52,7 @@ class IntersectionSwitchTests: XCTestCase {
     func testCanSwitchOnLightWithoutDuration() {
         let expectation = self.expectation(description: "Light is switched on")
         let light = MockLight(in: UIColor.red)
+        let intersectionSwitch = IntersectionSwitch()
         
         intersectionSwitch.switchOn(light) { 
             XCTAssertTrue(light.isOn)
