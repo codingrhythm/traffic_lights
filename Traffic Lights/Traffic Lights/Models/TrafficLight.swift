@@ -7,8 +7,9 @@
 //
 import UIKit
 
-
-struct TrafficLight: SequenceLight {
+class TrafficLight: SequenceLight {
+    
+    private var currentLightIndex:Int = -1
     
     let lights: [Light] = [
         Light(in: UIColor.greenColor(), withDuration: 30),
@@ -16,11 +17,16 @@ struct TrafficLight: SequenceLight {
         Light(in: UIColor.redColor())
     ]
     
-    var currentLight: Light? {
-        return lights.filter { $0.isOn }.first
-    }
     
-    func switchToNextLight() -> Bool {
-        return false
+    var lightToSwitchOn: Light? {
+        guard currentLightIndex < lights.count else {
+            // set to -1, so it can start from beginning
+            currentLightIndex = -1
+            return nil
+        }
+        
+        currentLightIndex += 1
+        
+        return lights[currentLightIndex]
     }
 }

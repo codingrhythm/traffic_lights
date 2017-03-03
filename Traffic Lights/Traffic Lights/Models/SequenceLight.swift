@@ -10,8 +10,8 @@ import Foundation
 
 protocol SequenceLight {
     var lights:[Light] {get}
-    var currentLight:Light? {get}
-    // returns a bool value indicates
-    // if current sequence reaches end
-    func switchToNextLight() -> Bool
+    // get next light to switch on, 
+    // returns nil if sequence is completed
+    var lightToSwitchOn:Light? {get}
+    
 }
