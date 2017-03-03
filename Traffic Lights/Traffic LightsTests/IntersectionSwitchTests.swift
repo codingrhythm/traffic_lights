@@ -32,14 +32,19 @@ class MockIntersectionSwitch: IntersectionSwitch {
     var numberOfDirectionChanged = 0
     var maxNumberOfDirectionChanges = 4
     var onComplete:(()->Void)?
-    override var direction: IntersectionSwitch.TrafficDirection {
-        didSet {
-            if numberOfDirectionChanged <= maxNumberOfDirectionChanges {
-                numberOfDirectionChanged += 1
-                super.direction = direction
-            } else {
-                onComplete?()
-            }
+    var lightsSwitchedOn:[TimedLight] = []
+    
+    override func switchOn(_ light: TimedLight, completion: @escaping (() -> Void)) {
+        super.switchOn(light, completion: completion)
+        lightsSwitchedOn.append(light)
+    }
+    
+    override func reverseDirection() {
+        if numberOfDirectionChanged <= maxNumberOfDirectionChanges {
+            super.reverseDirection()
+            numberOfDirectionChanged += 1
+        } else {
+            onComplete?()
         }
     }
 }
@@ -91,8 +96,11 @@ class IntersectionSwitchTests: XCTestCase {
         let expectation = self.expectation(description: "Traffic lights are on")
         
         intersectionSwitch.onComplete = {
+            XCTAssertEqual(intersectionSwitch.lightsSwitchedOn.count, 12)
             expectation.fulfill()
         }
+        
+        intersectionSwitch.start()
         
         waitForExpectations(timeout: 5) { (error) in
             XCTAssertNil(error)

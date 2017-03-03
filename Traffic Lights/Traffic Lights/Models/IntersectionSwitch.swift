@@ -13,7 +13,19 @@ class IntersectionSwitch {
         case southNorth = "SN", eastWest = "EW"
     }
     
-    var direction: TrafficDirection = .southNorth
+    private var currentLight: TrafficLight? {
+        if let key = direction {
+            return lights[key]
+        }
+        
+        return nil
+    }
+    
+    var direction: TrafficDirection? {
+        didSet {
+            switchOnNextLight()
+        }
+    }
     
     let lights: [TrafficDirection: TrafficLight]
     
@@ -22,6 +34,24 @@ class IntersectionSwitch {
             TrafficDirection.southNorth: southNorthLight,
             TrafficDirection.eastWest: eastWestLight
         ]
+    }
+    
+    private func switchOnNextLight() {
+        if let light = currentLight?.lightToSwitchOn {
+            switchOn(light) { [unowned self] in
+                self.switchOnNextLight()
+            }
+        } else {
+            reverseDirection()
+        }
+    }
+    
+    func reverseDirection() {
+        if direction == .southNorth {
+            direction = .eastWest
+        } else {
+            direction = .southNorth
+        }
     }
     
     func switchOn(_ light: TimedLight, completion: @escaping (() -> Void)) {
@@ -43,7 +73,7 @@ class IntersectionSwitch {
     
     
     func start() {
-        
+        direction = .southNorth
     }
     
     func stop() {
