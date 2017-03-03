@@ -67,4 +67,26 @@ class IntersectionSwitchTests: XCTestCase {
             XCTAssertNil(error)
         }
     }
+    
+    func testCanSwitchOnLightWithoutDuration() {
+        let expectation = self.expectation(description: "Light is switched on")
+        let light = MockLight(in: UIColor.red)
+        
+        intersectionSwitch.switchOn(light) { 
+            XCTAssertTrue(light.isOn)
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { (error) in
+            XCTAssertNil(error)
+        }
+    }
+    
+    func testCanStart() {
+        
+    }
+    
+    func testCanStop() {
+        
+    }
 }
