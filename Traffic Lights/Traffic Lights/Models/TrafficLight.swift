@@ -16,6 +16,10 @@ struct TrafficLight: SequenceLight {
         Light(in: UIColor.redColor())
     ]
     
+    var currentLight: Light? {
+        return lights.filter { $0.isOn }.first
+    }
+    
     func switchToNextLight() -> Bool {
         return false
     }
