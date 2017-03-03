@@ -15,10 +15,14 @@ class IntersectionSwitch {
     
     var direction: TrafficDirection = .southNorth
     
-    let lights: [TrafficDirection: TrafficLight] = [
-        TrafficDirection.southNorth: TrafficLight(),
-        TrafficDirection.eastWest: TrafficLight()
-    ]
+    let lights: [TrafficDirection: TrafficLight]
+    
+    init(southNorthLight:TrafficLight = TrafficLight(), eastWestLight:TrafficLight = TrafficLight()) {
+        lights = [
+            TrafficDirection.southNorth: southNorthLight,
+            TrafficDirection.eastWest: eastWestLight
+        ]
+    }
     
     func switchOn(_ light: TimedLight, completion: @escaping (() -> Void)) {
         light.isOn = true
