@@ -9,9 +9,9 @@
 import Foundation
 
 protocol SequenceLight {
-    var lights:[Light] {get}
+    var lights:[TimedLight] {get}
     // get next light to switch on, 
     // returns nil if sequence is completed
-    var lightToSwitchOn:Light? {get}
+    var lightToSwitchOn:TimedLight? {get}
     
 }

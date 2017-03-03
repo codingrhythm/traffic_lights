@@ -15,7 +15,9 @@ class TrafficLightTests: XCTestCase {
     func testCanInitialize() {
         XCTAssertEqual(trafficLight.lights.count, 3)
         XCTAssertEqual(trafficLight.lights[0].color, UIColor.green)
+        XCTAssertEqual(trafficLight.lights[0].duration, 30)
         XCTAssertEqual(trafficLight.lights[1].color, UIColor.yellow)
+        XCTAssertEqual(trafficLight.lights[1].duration, 5)
         XCTAssertEqual(trafficLight.lights[2].color, UIColor.red)
     }
     

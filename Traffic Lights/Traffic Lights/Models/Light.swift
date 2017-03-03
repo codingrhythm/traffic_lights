@@ -8,11 +8,13 @@
 
 import UIKit
 
-struct Light {
+class TimedLight {
     var color: UIColor
     var isOn = false
+    var duration: TimeInterval?
     
-    init(in color:UIColor) {
+    init(in color:UIColor, withDuration duration: TimeInterval? = nil) {
         self.color = color
+        self.duration = duration
     }
 }
