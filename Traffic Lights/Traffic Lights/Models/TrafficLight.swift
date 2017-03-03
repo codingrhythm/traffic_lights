@@ -9,17 +9,17 @@ import UIKit
 
 class TrafficLight: SequenceLight {
     
-    private var currentLightIndex:Int = -1
+    fileprivate var currentLightIndex:Int = -1
     
     let lights: [Light] = [
-        Light(in: UIColor.greenColor()),
-        Light(in: UIColor.yellowColor()),
-        Light(in: UIColor.redColor())
+        Light(in: UIColor.green),
+        Light(in: UIColor.yellow),
+        Light(in: UIColor.red)
     ]
     
     
     var lightToSwitchOn: Light? {
-        guard currentLightIndex < lights.count else {
+        guard currentLightIndex < lights.count - 1 else {
             // set to -1, so it can start from beginning
             currentLightIndex = -1
             return nil
