@@ -59,7 +59,8 @@ class IntersectionSwitch {
         
         if let duration = light.duration {
             
-            let timer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { _ in
+            let timer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { timer in
+                timer.invalidate()
                 light.isOn = false
                 completion()
             }

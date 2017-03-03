@@ -30,19 +30,19 @@ class MockLight: TimedLight {
 
 class MockIntersectionSwitch: IntersectionSwitch {
     var numberOfDirectionChanged = 0
-    var maxNumberOfDirectionChanges = 4
+    var maxNumberOfDirectionChanges = 2
     var onComplete:(()->Void)?
     var lightsSwitchedOn:[TimedLight] = []
     
     override func switchOn(_ light: TimedLight, completion: @escaping (() -> Void)) {
-        super.switchOn(light, completion: completion)
         lightsSwitchedOn.append(light)
+        super.switchOn(light, completion: completion)
     }
     
     override func reverseDirection() {
-        if numberOfDirectionChanged <= maxNumberOfDirectionChanges {
-            super.reverseDirection()
+        if numberOfDirectionChanged < maxNumberOfDirectionChanges {
             numberOfDirectionChanged += 1
+            super.reverseDirection()
         } else {
             onComplete?()
         }
@@ -86,7 +86,7 @@ class IntersectionSwitchTests: XCTestCase {
     
     func testCanStart() {
         let southNorthLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
-        let eastWestLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
+        let eastWestLight = TrafficLight(interval: 0.6, yellowDuration: 1)
         
         let intersectionSwitch = MockIntersectionSwitch(
             southNorthLight: southNorthLight,
@@ -94,15 +94,20 @@ class IntersectionSwitchTests: XCTestCase {
         )
         
         let expectation = self.expectation(description: "Traffic lights are on")
-        
+        let expectedLightPattern: [UIColor] = [UIColor.green, UIColor.yellow, UIColor.red]
         intersectionSwitch.onComplete = {
-            XCTAssertEqual(intersectionSwitch.lightsSwitchedOn.count, 12)
+            XCTAssertEqual(intersectionSwitch.lightsSwitchedOn.count, 9)
+            
+            for i in 0...8 {
+                XCTAssertEqual(intersectionSwitch.lightsSwitchedOn[i].color, expectedLightPattern[i % 3])
+            }
+            
             expectation.fulfill()
         }
         
         intersectionSwitch.start()
         
-        waitForExpectations(timeout: 5) { (error) in
+        waitForExpectations(timeout: 4) { (error) in
             XCTAssertNil(error)
         }
     }
