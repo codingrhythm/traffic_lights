@@ -26,7 +26,22 @@ class MockLight: TimedLight {
             }
         }
     }
-    
+}
+
+class MockIntersectionSwitch: IntersectionSwitch {
+    var numberOfDirectionChanged = 0
+    var maxNumberOfDirectionChanges = 4
+    var onComplete:(()->Void)?
+    override var direction: IntersectionSwitch.TrafficDirection {
+        didSet {
+            if numberOfDirectionChanged <= maxNumberOfDirectionChanges {
+                numberOfDirectionChanged += 1
+                super.direction = direction
+            } else {
+                onComplete?()
+            }
+        }
+    }
 }
 
 class IntersectionSwitchTests: XCTestCase {
@@ -65,10 +80,22 @@ class IntersectionSwitchTests: XCTestCase {
     }
     
     func testCanStart() {
+        let southNorthLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
+        let eastWestLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
         
-    }
-    
-    func testCanStop() {
+        let intersectionSwitch = MockIntersectionSwitch(
+            southNorthLight: southNorthLight,
+            eastWestLight: eastWestLight
+        )
         
+        let expectation = self.expectation(description: "Traffic lights are on")
+        
+        intersectionSwitch.onComplete = {
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5) { (error) in
+            XCTAssertNil(error)
+        }
     }
 }
