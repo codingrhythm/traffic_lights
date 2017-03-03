@@ -11,10 +11,8 @@ import UIKit
 struct Light {
     var color: UIColor
     var isOn = false
-    var duration: NSTimeInterval?
     
-    init(in color:UIColor, withDuration duration: NSTimeInterval? = nil) {
+    init(in color:UIColor) {
         self.color = color
-        self.duration = duration
     }
 }

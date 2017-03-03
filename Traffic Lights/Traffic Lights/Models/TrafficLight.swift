@@ -12,8 +12,8 @@ class TrafficLight: SequenceLight {
     private var currentLightIndex:Int = -1
     
     let lights: [Light] = [
-        Light(in: UIColor.greenColor(), withDuration: 30),
-        Light(in: UIColor.yellowColor(), withDuration: 5),
+        Light(in: UIColor.greenColor()),
+        Light(in: UIColor.yellowColor()),
         Light(in: UIColor.redColor())
     ]
     
