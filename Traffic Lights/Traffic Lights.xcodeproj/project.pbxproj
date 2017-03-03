@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		144D40211E6931CE00E4CD85 /* IntersectionSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144D40201E6931CE00E4CD85 /* IntersectionSwitch.swift */; };
+		144D40231E693B6800E4CD85 /* IntersectionSwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144D40221E693B6800E4CD85 /* IntersectionSwitchTests.swift */; };
 		14EF3D8E1E68E54A00DD052D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14EF3D8D1E68E54A00DD052D /* Assets.xcassets */; };
 		14EF3D941E68E55700DD052D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14EF3D901E68E55700DD052D /* LaunchScreen.storyboard */; };
 		14EF3D951E68E55700DD052D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14EF3D921E68E55700DD052D /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		144D40201E6931CE00E4CD85 /* IntersectionSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntersectionSwitch.swift; path = Models/IntersectionSwitch.swift; sourceTree = "<group>"; };
+		144D40221E693B6800E4CD85 /* IntersectionSwitchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntersectionSwitchTests.swift; sourceTree = "<group>"; };
 		14EF3D8D1E68E54A00DD052D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Assets/Assets.xcassets; sourceTree = "<group>"; };
 		14EF3D911E68E55700DD052D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14EF3D931E68E55700DD052D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			children = (
 				4935AA0D1D4726F900B782BC /* Info.plist */,
 				14EF3DA21E68F09100DD052D /* TrafficLightTests.swift */,
+				144D40221E693B6800E4CD85 /* IntersectionSwitchTests.swift */,
 			);
 			path = "Traffic LightsTests";
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				144D40231E693B6800E4CD85 /* IntersectionSwitchTests.swift in Sources */,
 				14EF3DA31E68F09100DD052D /* TrafficLightTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

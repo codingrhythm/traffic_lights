@@ -20,9 +20,23 @@ class IntersectionSwitch {
         TrafficDirection.eastWest: TrafficLight()
     ]
     
-    func switchOn(_ light: TimedLight, completion: (() -> Void)) {
+    func switchOn(_ light: TimedLight, completion: @escaping (() -> Void)) {
+        light.isOn = true
         
+        if let duration = light.duration {
+            
+            let timer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { _ in
+                light.isOn = false
+                completion()
+            }
+            
+            timer.tolerance = 0
+            
+        } else {
+            completion()
+        }
     }
+    
     
     func start() {
         
