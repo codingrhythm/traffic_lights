@@ -11,11 +11,7 @@ class TrafficLight: SequenceLight {
     
     fileprivate var currentLightIndex:Int = -1
     
-    let lights: [TimedLight] = [
-        TimedLight(in: UIColor.green, withDuration: 30),
-        TimedLight(in: UIColor.yellow, withDuration: 5),
-        TimedLight(in: UIColor.red)
-    ]
+    let lights: [TimedLight]
     
     
     var lightToSwitchOn: TimedLight? {
@@ -28,5 +24,13 @@ class TrafficLight: SequenceLight {
         currentLightIndex += 1
         
         return lights[currentLightIndex]
+    }
+    
+    init(interval:TimeInterval = 30, yellowDuration:TimeInterval = 5) {
+        lights = [
+            TimedLight(in: UIColor.green, withDuration: interval),
+            TimedLight(in: UIColor.yellow, withDuration: yellowDuration),
+            TimedLight(in: UIColor.red)
+        ]
     }
 }
