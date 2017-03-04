@@ -21,6 +21,11 @@ class LightView: UIView {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        layer.borderWidth = 1
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = bounds.size.width / 2

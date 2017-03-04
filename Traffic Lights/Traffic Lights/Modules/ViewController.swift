@@ -6,17 +6,21 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet var southNorthLight: TrafficLightsView?
+    @IBOutlet var eastWestLight: TrafficLightsView?
+    
+    var intersection = Intersection()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        southNorthLight?.trafficLights = intersection.lights[.southNorth]
+        eastWestLight?.trafficLights = intersection.lights[.eastWest]
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func onMainSwitchValueChange(_ sender: UISwitch) {
+        intersection.isOn = sender.isOn
     }
-
-
 }
 

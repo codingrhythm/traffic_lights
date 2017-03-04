@@ -61,7 +61,10 @@ class TrafficLight: Device {
                 switchOn(lights[1], duration: blinkInterval) { [unowned self] in
                     _ = Timer.scheduledTimer(withTimeInterval: self.blinkInterval, repeats: false) { timer in
                         timer.invalidate()
-                        self.mode = .default
+                        
+                        if !self.isOn {
+                            self.mode = .default
+                        }
                     }
                 }
                 onLightChanged?(false)
