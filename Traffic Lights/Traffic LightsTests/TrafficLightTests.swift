@@ -39,7 +39,7 @@ class TrafficLightTests: XCTestCase {
         
         trafficLight.reset()
         
-        XCTAssertTrue(trafficLight.lights.last?.isOn ?? false)
-        XCTAssertFalse(trafficLight.lights.first?.isOn ?? true)
+        XCTAssertEqual(trafficLight.currentLight?.color, UIColor.red)
+        XCTAssertEqual(trafficLight.lightToSwitchOn?.color, UIColor.green)
     }
 }

@@ -26,6 +26,16 @@ class TrafficLight: SequenceLight {
         return lights[currentLightIndex]
     }
     
+    var currentLight: TimedLight? {
+        for light in lights {
+            if light.isOn {
+                return light
+            }
+        }
+        
+        return nil
+    }
+    
     init(interval:TimeInterval = 30, yellowDuration:TimeInterval = 5) {
         lights = [
             TimedLight(in: UIColor.green, withDuration: interval),
@@ -44,5 +54,7 @@ class TrafficLight: SequenceLight {
         
         // switch on red light
         lights.last?.isOn = true
+        
+        currentLightIndex = -1
     }
 }

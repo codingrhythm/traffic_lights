@@ -39,8 +39,18 @@ class MockIntersectionSwitch: IntersectionSwitch {
         super.switchOn(light, completion: completion)
     }
     
+    
+    override var isStopped: Bool {
+        didSet {
+            if isStopped {
+                onComplete?()
+            }
+        }
+    }
+    
     override func reverseDirection() {
         if numberOfDirectionChanged < maxNumberOfDirectionChanges {
+            
             numberOfDirectionChanged += 1
             super.reverseDirection()
         } else {
@@ -52,7 +62,7 @@ class MockIntersectionSwitch: IntersectionSwitch {
 class IntersectionSwitchTests: XCTestCase {
     
     
-    func testCanSwitchOnLightForOneSeconds() {
+    func testCanSwitchOnLightForOneSecond() {
         let expectation = self.expectation(description: "Light is switched on for 1 second")
         let light = MockLight(in: UIColor.red, withDuration: 1)
         let intersectionSwitch = IntersectionSwitch()
@@ -106,6 +116,9 @@ class IntersectionSwitchTests: XCTestCase {
         }
         
         intersectionSwitch.start()
+        XCTAssertEqual(intersectionSwitch.direction, .southNorth)
+        XCTAssertEqual(southNorthLight.currentLight?.color, UIColor.green)
+        XCTAssertEqual(eastWestLight.currentLight?.color, UIColor.red)
         
         waitForExpectations(timeout: 4) { (error) in
             XCTAssertNil(error)
@@ -119,5 +132,34 @@ class IntersectionSwitchTests: XCTestCase {
         XCTAssertEqual(intersectionSwitch.direction, .eastWest)
         intersectionSwitch.reverseDirection()
         XCTAssertEqual(intersectionSwitch.direction, .southNorth)
+    }
+    
+    func testCanStop() {
+        let southNorthLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
+        let eastWestLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
+        
+        let intersectionSwitch = MockIntersectionSwitch(
+            southNorthLight: southNorthLight,
+            eastWestLight: eastWestLight
+        )
+        
+        let expectation = self.expectation(description: "Traffic lights are on")
+        intersectionSwitch.onComplete = {
+            XCTAssertGreaterThan(intersectionSwitch.lightsSwitchedOn.count, 0)
+            XCTAssertLessThan(intersectionSwitch.numberOfDirectionChanged, intersectionSwitch.maxNumberOfDirectionChanges)
+            expectation.fulfill()
+        }
+        
+        intersectionSwitch.start()
+        
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
+            timer.invalidate()
+            intersectionSwitch.stop()
+        }
+        
+        waitForExpectations(timeout: 4) { (error) in
+            XCTAssertNil(error)
+        }
+
     }
 }

@@ -38,6 +38,7 @@ class IntersectionSwitch {
     
     private func switchOnNextLight() {
         guard !isStopped else {
+            reset()
             return
         }
         
@@ -55,6 +56,12 @@ class IntersectionSwitch {
             direction = .eastWest
         } else {
             direction = .southNorth
+        }
+    }
+    
+    func reset() {
+        for (_, light) in lights {
+            light.reset()
         }
     }
     
@@ -79,10 +86,11 @@ class IntersectionSwitch {
     
     func start() {
         isStopped = false
+        reset()
         direction = .southNorth
     }
     
-    private var isStopped = true
+    internal var isStopped = true
     func stop() {
         isStopped = true
     }
