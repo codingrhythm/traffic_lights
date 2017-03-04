@@ -22,5 +22,9 @@ class ViewController: UIViewController {
     @IBAction func onMainSwitchValueChange(_ sender: UISwitch) {
         intersection.isOn = sender.isOn
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }
 
