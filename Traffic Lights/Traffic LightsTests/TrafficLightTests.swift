@@ -19,6 +19,7 @@ class TrafficLightTests: XCTestCase {
         XCTAssertEqual(trafficLight.lights[1].color, UIColor.yellow)
         XCTAssertEqual(trafficLight.lights[1].duration, 5)
         XCTAssertEqual(trafficLight.lights[2].color, UIColor.red)
+        XCTAssertTrue(trafficLight.lights.last?.isOn ?? false)
     }
     
     func testCanGetNextLightInCorrectOrder() {
@@ -28,5 +29,17 @@ class TrafficLightTests: XCTestCase {
             XCTAssertEqual(trafficLight.lightToSwitchOn?.color, UIColor.red)
             XCTAssertNil(trafficLight.lightToSwitchOn?.color)
         }
+    }
+    
+    func testCanReset() {
+        let light = trafficLight.lightToSwitchOn
+        light?.isOn = true
+        
+        XCTAssertTrue(trafficLight.lights.first?.isOn ?? false)
+        
+        trafficLight.reset()
+        
+        XCTAssertTrue(trafficLight.lights.last?.isOn ?? false)
+        XCTAssertFalse(trafficLight.lights.first?.isOn ?? true)
     }
 }

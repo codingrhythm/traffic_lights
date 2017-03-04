@@ -32,5 +32,17 @@ class TrafficLight: SequenceLight {
             TimedLight(in: UIColor.yellow, withDuration: yellowDuration),
             TimedLight(in: UIColor.red)
         ]
+        
+        reset()
+    }
+    
+    func reset() {
+        // switch off all lights
+        lights.forEach { light in
+            light.isOn = false
+        }
+        
+        // switch on red light
+        lights.last?.isOn = true
     }
 }

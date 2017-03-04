@@ -37,6 +37,10 @@ class IntersectionSwitch {
     }
     
     private func switchOnNextLight() {
+        guard !isStopped else {
+            return
+        }
+        
         if let light = currentLight?.lightToSwitchOn {
             switchOn(light) { [unowned self] in
                 self.switchOnNextLight()
@@ -74,10 +78,12 @@ class IntersectionSwitch {
     
     
     func start() {
+        isStopped = false
         direction = .southNorth
     }
     
+    private var isStopped = true
     func stop() {
-        
+        isStopped = true
     }
 }
