@@ -8,10 +8,15 @@
 
 import UIKit
 
-struct Light {
+class ColorLight: Device {
     var color: UIColor
-    var isOn = false
-    
+    var stateChanged: ((Bool) -> Void)?
+    var isOn: Bool = false {
+        didSet {
+            stateChanged?(isOn)
+        }
+    }
+
     init(in color:UIColor) {
         self.color = color
     }
