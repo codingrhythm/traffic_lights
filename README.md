@@ -12,7 +12,7 @@ Simulate Traffic Lights at intersection
 ### Step One: Define Models
 
 1. `ColorLight` model which stores color information and on/off state of the light.
-1. `TrafficLight` model keeps reference to 3 `ColorLight` with `red`, `yellow` and `green`. This model is responsible to switch on/off lights in correct order. `TrafficLight` can be switched on/off, when it's on, it should start with green light. When it reaches red light, it should notify it's observer, so observer will know it's safe to switch other `TrafficLight` to green.
+1. `TrafficLight` model keeps reference to 3 `ColorLight` with `red`, `yellow` and `green`. This model is responsible for switch on/off lights in correct order. `TrafficLight` can be switched on/off, when it's on, it should start with green light. When it reaches red light, it should notify it's observer, so observer will know it's safe to switch other `TrafficLight` to green.
 1. `Intersection` model keeps two `TrafficLight` objects for different direction. It's main goal is to coordinate two `TrafficLight` to switch on the correct light.
 1. Make sure all model passes tests.
 
