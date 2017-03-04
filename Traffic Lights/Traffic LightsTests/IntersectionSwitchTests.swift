@@ -9,155 +9,75 @@
 import XCTest
 @testable import Traffic_Lights
 
-class MockLight: TimedLight {
-    var wasSwitchedOn = false
-    var switchOnTime = Date()
-    var actualDuration: TimeInterval = 0
-    override var isOn: Bool {
-        didSet {
-            if isOn != oldValue {
-                if !oldValue {
-                    wasSwitchedOn = true
-                    switchOnTime = Date()
-                } else {
-                    actualDuration = -switchOnTime.timeIntervalSinceNow
-                }
-                
-            }
-        }
-    }
-}
-
-class MockIntersectionSwitch: IntersectionSwitch {
-    var numberOfDirectionChanged = 0
-    var maxNumberOfDirectionChanges = 2
-    var onComplete:(()->Void)?
-    var lightsSwitchedOn:[TimedLight] = []
-    
-    override func switchOn(_ light: TimedLight, completion: @escaping (() -> Void)) {
-        lightsSwitchedOn.append(light)
-        super.switchOn(light, completion: completion)
-    }
-    
-    
-    override var isStopped: Bool {
-        didSet {
-            if isStopped {
-                onComplete?()
-            }
-        }
-    }
-    
-    override func reverseDirection() {
-        if numberOfDirectionChanged < maxNumberOfDirectionChanges {
-            
-            numberOfDirectionChanged += 1
-            super.reverseDirection()
-        } else {
-            onComplete?()
-        }
-    }
-}
-
 class IntersectionSwitchTests: XCTestCase {
     
-    
-    func testCanSwitchOnLightForOneSecond() {
-        let expectation = self.expectation(description: "Light is switched on for 1 second")
-        let light = MockLight(in: UIColor.red, withDuration: 1)
-        let intersectionSwitch = IntersectionSwitch()
+    func testCanSwitchOn() {
+        let snLight = TrafficLight(interval: 0.05, yellowDuration: 0.05, blinkInterval: 0.05)
+        let ewLight = TrafficLight(interval: 0.05, yellowDuration: 0.05, blinkInterval: 0.05)
+        let intersection = Intersection(southNorthLight: snLight, eastWestLight: ewLight)
         
-        intersectionSwitch.switchOn(light) {
-            XCTAssertFalse(light.isOn)
-            XCTAssertTrue(light.wasSwitchedOn)
-            XCTAssertEqual(Int(light.actualDuration), 1)
-            expectation.fulfill()
+        XCTAssertFalse(snLight.isOn)
+        XCTAssertFalse(ewLight.isOn)
+        XCTAssertEqual(snLight.mode, .default)
+        XCTAssertEqual(ewLight.mode, .default)
+        
+        var numberOfChanges = 0
+        var lastDirection: Intersection.TrafficDirection?
+        
+        let expectation = self.expectation(description: "Intersection can switch direction")
+        intersection.onDirectionChange = {
+            XCTAssertNotEqual(lastDirection, intersection.direction)
+            lastDirection = intersection.direction
+            numberOfChanges += 1
+            
+            if intersection.direction == .southNorth {
+                XCTAssertEqual(snLight.currentLight?.color, UIColor.green)
+                XCTAssertEqual(ewLight.currentLight?.color, UIColor.red)
+            } else {
+                XCTAssertEqual(snLight.currentLight?.color, UIColor.red)
+                XCTAssertEqual(ewLight.currentLight?.color, UIColor.green)
+            }
+            
+            if numberOfChanges == 5 {
+                expectation.fulfill()
+            }
         }
         
-        waitForExpectations(timeout: 1.1) { (error) in
-            XCTAssertNil(error)
-        }
-    }
-    
-    func testCanSwitchOnLightWithoutDuration() {
-        let expectation = self.expectation(description: "Light is switched on")
-        let light = MockLight(in: UIColor.red)
-        let intersectionSwitch = IntersectionSwitch()
-        
-        intersectionSwitch.switchOn(light) { 
-            XCTAssertTrue(light.isOn)
-            expectation.fulfill()
-        }
+        intersection.isOn = true
         
         waitForExpectations(timeout: 1) { (error) in
             XCTAssertNil(error)
         }
     }
     
-    func testCanStart() {
-        let southNorthLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
-        let eastWestLight = TrafficLight(interval: 0.6, yellowDuration: 1)
+    func testCanSwitchOff() {
+        let snLight = TrafficLight(interval: 0.05, yellowDuration: 0.05, blinkInterval: 0.05)
+        let ewLight = TrafficLight(interval: 0.05, yellowDuration: 0.05, blinkInterval: 0.05)
+        let intersection = Intersection(southNorthLight: snLight, eastWestLight: ewLight)
         
-        let intersectionSwitch = MockIntersectionSwitch(
-            southNorthLight: southNorthLight,
-            eastWestLight: eastWestLight
-        )
-        
-        let expectation = self.expectation(description: "Traffic lights are on")
-        let expectedLightPattern: [UIColor] = [UIColor.green, UIColor.yellow, UIColor.red]
-        intersectionSwitch.onComplete = {
-            XCTAssertEqual(intersectionSwitch.lightsSwitchedOn.count, 9)
+        let expectation = self.expectation(description: "Intersection can be switched off")
+        var numberOfChanges = 0
+        intersection.onDirectionChange = {
+            numberOfChanges += 1
             
-            for i in 0...8 {
-                XCTAssertEqual(intersectionSwitch.lightsSwitchedOn[i].color, expectedLightPattern[i % 3])
+            if numberOfChanges == 3 {
+                intersection.isOn = false
             }
-            
-            expectation.fulfill()
         }
         
-        intersectionSwitch.start()
-        XCTAssertEqual(intersectionSwitch.direction, .southNorth)
-        XCTAssertEqual(southNorthLight.currentLight?.color, UIColor.green)
-        XCTAssertEqual(eastWestLight.currentLight?.color, UIColor.red)
-        
-        waitForExpectations(timeout: 4) { (error) in
-            XCTAssertNil(error)
-        }
-    }
-    
-    func testCanReverseDirection() {
-        let intersectionSwitch = IntersectionSwitch()
-        intersectionSwitch.direction = .southNorth
-        intersectionSwitch.reverseDirection()
-        XCTAssertEqual(intersectionSwitch.direction, .eastWest)
-        intersectionSwitch.reverseDirection()
-        XCTAssertEqual(intersectionSwitch.direction, .southNorth)
-    }
-    
-    func testCanStop() {
-        let southNorthLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
-        let eastWestLight = TrafficLight(interval: 0.6, yellowDuration: 0.1)
-        
-        let intersectionSwitch = MockIntersectionSwitch(
-            southNorthLight: southNorthLight,
-            eastWestLight: eastWestLight
-        )
-        
-        let expectation = self.expectation(description: "Traffic lights are on")
-        intersectionSwitch.onComplete = {
-            XCTAssertGreaterThan(intersectionSwitch.lightsSwitchedOn.count, 0)
-            XCTAssertLessThan(intersectionSwitch.numberOfDirectionChanged, intersectionSwitch.maxNumberOfDirectionChanges)
-            expectation.fulfill()
+        intersection.stateChanged = { isOn in
+            if !isOn {
+                XCTAssertFalse(snLight.isOn)
+                XCTAssertFalse(ewLight.isOn)
+                XCTAssertEqual(snLight.mode, .default)
+                XCTAssertEqual(ewLight.mode, .default)
+                expectation.fulfill()
+            }
         }
         
-        intersectionSwitch.start()
+        intersection.isOn = true
         
-        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
-            timer.invalidate()
-            intersectionSwitch.stop()
-        }
-        
-        waitForExpectations(timeout: 4) { (error) in
+        waitForExpectations(timeout: 1) { (error) in
             XCTAssertNil(error)
         }
 
