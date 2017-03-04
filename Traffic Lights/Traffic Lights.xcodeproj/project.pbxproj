@@ -13,6 +13,7 @@
 		14E6718A1E6AACD60051EED5 /* RoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E671891E6AACD60051EED5 /* RoadView.swift */; };
 		14E6718C1E6AAD490051EED5 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6718B1E6AAD490051EED5 /* LightView.swift */; };
 		14E6718E1E6AAD680051EED5 /* TrafficLightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6718D1E6AAD680051EED5 /* TrafficLightsView.swift */; };
+		14E671901E6AAFF70051EED5 /* LightViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6718F1E6AAFF70051EED5 /* LightViewTests.swift */; };
 		14EF3D8E1E68E54A00DD052D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14EF3D8D1E68E54A00DD052D /* Assets.xcassets */; };
 		14EF3D941E68E55700DD052D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14EF3D901E68E55700DD052D /* LaunchScreen.storyboard */; };
 		14EF3D951E68E55700DD052D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14EF3D921E68E55700DD052D /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		14E671891E6AACD60051EED5 /* RoadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoadView.swift; path = Modules/Views/RoadView.swift; sourceTree = "<group>"; };
 		14E6718B1E6AAD490051EED5 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightView.swift; path = Modules/Views/LightView.swift; sourceTree = "<group>"; };
 		14E6718D1E6AAD680051EED5 /* TrafficLightsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrafficLightsView.swift; path = Modules/Views/TrafficLightsView.swift; sourceTree = "<group>"; };
+		14E6718F1E6AAFF70051EED5 /* LightViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewTests.swift; sourceTree = "<group>"; };
 		14EF3D8D1E68E54A00DD052D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Assets/Assets.xcassets; sourceTree = "<group>"; };
 		14EF3D911E68E55700DD052D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14EF3D931E68E55700DD052D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				4935AA0D1D4726F900B782BC /* Info.plist */,
 				14EF3DA21E68F09100DD052D /* TrafficLightTests.swift */,
 				144D40221E693B6800E4CD85 /* IntersectionSwitchTests.swift */,
+				14E6718F1E6AAFF70051EED5 /* LightViewTests.swift */,
 			);
 			path = "Traffic LightsTests";
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				144D40231E693B6800E4CD85 /* IntersectionSwitchTests.swift in Sources */,
+				14E671901E6AAFF70051EED5 /* LightViewTests.swift in Sources */,
 				14EF3DA31E68F09100DD052D /* TrafficLightTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
