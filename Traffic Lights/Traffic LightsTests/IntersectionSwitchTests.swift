@@ -111,4 +111,13 @@ class IntersectionSwitchTests: XCTestCase {
             XCTAssertNil(error)
         }
     }
+    
+    func testCanReverseDirection() {
+        let intersectionSwitch = IntersectionSwitch()
+        intersectionSwitch.direction = .southNorth
+        intersectionSwitch.reverseDirection()
+        XCTAssertEqual(intersectionSwitch.direction, .eastWest)
+        intersectionSwitch.reverseDirection()
+        XCTAssertEqual(intersectionSwitch.direction, .southNorth)
+    }
 }
