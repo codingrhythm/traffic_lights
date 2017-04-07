@@ -7,19 +7,20 @@
 //
 import UIKit
 
-class TrafficLight: Device {
+class TrafficLight {
     
-    enum LightMode {
-        case green, yellow, red, `default`
+    enum SignalType {
+        case green, yellow, red, off
     }
     
-    var onLightChanged:((Bool) -> Void)?
+    let yellowLight = ColorLight(in: UIColor.yellow)
+    let redLight = ColorLight(in: UIColor.red)
+    let greenLight = ColorLight(in: UIColor.green)
     
-    var stateChanged: ((Bool) -> Void)?
-    var isOn: Bool = false {
-        didSet {
-            stateChanged?(isOn)
-        }
+    var onSignalChanged:((Bool) -> Void)?
+    
+    var isOn: Bool {
+        return signal != .off
     }
     
     var currentLight: ColorLight? {
@@ -32,43 +33,9 @@ class TrafficLight: Device {
         return nil
     }
     
-    var mode:LightMode = .default {
+    var signal: SignalType = .off {
         didSet {
-            
-            switch mode {
-            case .green:
-                switchOn(lights[0], duration: interval) { [unowned self] in
-                    if self.isOn {
-                        self.mode = .yellow
-                    }
-                }
-                onLightChanged?(false)
-                
-            case .yellow:
-                switchOn(lights[1], duration: yellowDuration) { [unowned self] in
-                    if self.isOn {
-                        self.mode = .red
-                    }
-                }
-                onLightChanged?(false)
-                
-            case .red:
-                switchOn(lights[2])
-                onLightChanged?(true)
-                
-            default:
-                // blink yellow light
-                switchOn(lights[1], duration: blinkInterval) { [unowned self] in
-                    _ = Timer.scheduledTimer(withTimeInterval: self.blinkInterval, repeats: false) { timer in
-                        timer.invalidate()
-                        
-                        if !self.isOn {
-                            self.mode = .default
-                        }
-                    }
-                }
-                onLightChanged?(false)
-            }
+            handleSignalChange()
         }
     }
     
@@ -84,28 +51,54 @@ class TrafficLight: Device {
         self.blinkInterval = blinkInterval
         
         lights = [
-            ColorLight(in: UIColor.green),
-            ColorLight(in: UIColor.yellow),
-            ColorLight(in: UIColor.red)
+            greenLight,
+            yellowLight,
+            redLight
         ]
         
-        switchOff()
+        handleSignalChange()
     }
     
-    func switchOn(to projectedMode:LightMode = .green) {
-        lights.forEach { light in
-            light.isOn = false
-        }
+    private func handleSignalChange() {
+        currentLight?.isOn = false
         
-        isOn = projectedMode != .default
-        mode = projectedMode
+        switch signal {
+        case .green:
+            switchOn(greenLight, for: interval) { [unowned self] in
+                if self.isOn {
+                    self.signal = .yellow
+                }
+            }
+            onSignalChanged?(false)
+            
+        case .yellow:
+            switchOn(yellowLight, for: yellowDuration) { [unowned self] in
+                if self.isOn {
+                    self.signal = .red
+                }
+            }
+            onSignalChanged?(false)
+            
+        case .red:
+            switchOn(redLight)
+            onSignalChanged?(true)
+            
+        case .off:
+            switchOn(yellowLight, for: blinkInterval) { [unowned self] in
+                _ = Timer.scheduledTimer(withTimeInterval: self.blinkInterval, repeats: false) { timer in
+                    timer.invalidate()
+                    
+                    if !self.isOn {
+                        self.signal = .off
+                    }
+                }
+            }
+            onSignalChanged?(false)
+        }
     }
     
-    func switchOff() {
-        switchOn(to: .default)
-    }
     
-    func switchOn(_ light: ColorLight, duration: TimeInterval? = nil, completion: (() -> Void)? = nil) {
+    private func switchOn(_ light: ColorLight, for duration: TimeInterval? = nil, completion: (() -> Void)? = nil) {
         light.isOn = true
         
         if let duration = duration {

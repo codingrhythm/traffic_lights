@@ -28,8 +28,8 @@ class TrafficLightsView: UIView {
     }
     
     private func updateUI() {
-        greenLight?.light = trafficLights?.lights[0]
-        yellowLight?.light = trafficLights?.lights[1]
-        redLight?.light = trafficLights?.lights[2]
+        greenLight?.light = trafficLights?.greenLight
+        yellowLight?.light = trafficLights?.yellowLight
+        redLight?.light = trafficLights?.redLight
     }
 }

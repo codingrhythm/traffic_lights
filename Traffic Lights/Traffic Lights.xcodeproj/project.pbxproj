@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		144D40211E6931CE00E4CD85 /* Intersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144D40201E6931CE00E4CD85 /* Intersection.swift */; };
 		144D40231E693B6800E4CD85 /* IntersectionSwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144D40221E693B6800E4CD85 /* IntersectionSwitchTests.swift */; };
-		14E671871E6A76FC0051EED5 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E671861E6A76FC0051EED5 /* Protocols.swift */; };
 		14E6718C1E6AAD490051EED5 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6718B1E6AAD490051EED5 /* LightView.swift */; };
 		14E6718E1E6AAD680051EED5 /* TrafficLightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6718D1E6AAD680051EED5 /* TrafficLightsView.swift */; };
 		14E671901E6AAFF70051EED5 /* LightViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E6718F1E6AAFF70051EED5 /* LightViewTests.swift */; };
@@ -37,7 +36,6 @@
 /* Begin PBXFileReference section */
 		144D40201E6931CE00E4CD85 /* Intersection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Intersection.swift; path = Models/Intersection.swift; sourceTree = "<group>"; };
 		144D40221E693B6800E4CD85 /* IntersectionSwitchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntersectionSwitchTests.swift; sourceTree = "<group>"; };
-		14E671861E6A76FC0051EED5 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = Models/Protocols.swift; sourceTree = "<group>"; };
 		14E6718B1E6AAD490051EED5 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightView.swift; path = Modules/Views/LightView.swift; sourceTree = "<group>"; };
 		14E6718D1E6AAD680051EED5 /* TrafficLightsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrafficLightsView.swift; path = Modules/Views/TrafficLightsView.swift; sourceTree = "<group>"; };
 		14E6718F1E6AAFF70051EED5 /* LightViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewTests.swift; sourceTree = "<group>"; };
@@ -89,7 +87,6 @@
 				14EF3D9C1E68E9C000DD052D /* TrafficLight.swift */,
 				14EF3DA01E68EE7B00DD052D /* ColorLight.swift */,
 				144D40201E6931CE00E4CD85 /* Intersection.swift */,
-				14E671861E6A76FC0051EED5 /* Protocols.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -286,7 +283,6 @@
 				14EF3D9B1E68E57B00DD052D /* ViewController.swift in Sources */,
 				144D40211E6931CE00E4CD85 /* Intersection.swift in Sources */,
 				14EF3DA11E68EE7B00DD052D /* ColorLight.swift in Sources */,
-				14E671871E6A76FC0051EED5 /* Protocols.swift in Sources */,
 				14E6718E1E6AAD680051EED5 /* TrafficLightsView.swift in Sources */,
 				14E6718C1E6AAD490051EED5 /* LightView.swift in Sources */,
 				14EF3D971E68E56600DD052D /* AppDelegate.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Intersection: Device {
+class Intersection {
     enum TrafficDirection: String {
         case southNorth = "SN", eastWest = "EW"
     }
@@ -17,7 +17,7 @@ class Intersection: Device {
     var direction: TrafficDirection? {
         didSet {
             if let direction = direction {
-                lights[direction]?.switchOn()
+                lights[direction]?.signal = .green
                 onDirectionChange?()
             }
         }
@@ -29,10 +29,10 @@ class Intersection: Device {
     var isOn: Bool = false {
         didSet {
             if isOn {
-                lights[.eastWest]?.switchOn(to: .red)
+                lights[.eastWest]?.signal = .red
             } else {
                 for (_, light) in lights {
-                    light.switchOff()
+                    light.signal = .off
                 }
             }
             
@@ -40,19 +40,19 @@ class Intersection: Device {
         }
     }
     
-    init(southNorthLight:TrafficLight = TrafficLight(), eastWestLight:TrafficLight = TrafficLight()) {
+    init(southNorthLight: TrafficLight = TrafficLight(), eastWestLight: TrafficLight = TrafficLight()) {
         lights = [
             TrafficDirection.southNorth: southNorthLight,
             TrafficDirection.eastWest: eastWestLight
         ]
         
-        southNorthLight.onLightChanged = { [unowned self] isCompleted in
+        southNorthLight.onSignalChanged = { [unowned self] isCompleted in
             if isCompleted {
                 self.direction = .eastWest
             }
         }
         
-        eastWestLight.onLightChanged = { [unowned self] isCompleted in
+        eastWestLight.onSignalChanged = { [unowned self] isCompleted in
             if isCompleted {
                 self.direction = .southNorth
             }
