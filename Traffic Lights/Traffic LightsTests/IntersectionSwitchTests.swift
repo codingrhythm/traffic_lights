@@ -18,8 +18,8 @@ class IntersectionSwitchTests: XCTestCase {
         
         XCTAssertFalse(snLight.isOn)
         XCTAssertFalse(ewLight.isOn)
-        XCTAssertEqual(snLight.mode, .default)
-        XCTAssertEqual(ewLight.mode, .default)
+        XCTAssertEqual(snLight.signal, .off)
+        XCTAssertEqual(ewLight.signal, .off)
         
         var numberOfChanges = 0
         var lastDirection: Intersection.TrafficDirection?
@@ -69,8 +69,8 @@ class IntersectionSwitchTests: XCTestCase {
             if !isOn {
                 XCTAssertFalse(snLight.isOn)
                 XCTAssertFalse(ewLight.isOn)
-                XCTAssertEqual(snLight.mode, .default)
-                XCTAssertEqual(ewLight.mode, .default)
+                XCTAssertEqual(snLight.signal, .off)
+                XCTAssertEqual(ewLight.signal, .off)
                 expectation.fulfill()
             }
         }

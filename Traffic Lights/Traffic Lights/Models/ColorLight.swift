@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ColorLight: Device {
+class ColorLight {
     var color: UIColor
     var stateChanged: ((Bool) -> Void)?
     var isOn: Bool = false {
